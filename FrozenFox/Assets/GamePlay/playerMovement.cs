@@ -19,7 +19,6 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         float horinzontalInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(horinzontalInput * speed, rb.velocity.y);
 
