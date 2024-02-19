@@ -12,7 +12,7 @@ public class PlayerCollision : MonoBehaviour
             //do something here
 
         }
-        //Debug.Log("hit");
+        
     }
 
 
