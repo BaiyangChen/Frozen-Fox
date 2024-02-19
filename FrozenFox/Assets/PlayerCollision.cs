@@ -9,7 +9,7 @@ public class PlayerCollision : MonoBehaviour
         if(col.gameObject.tag == "SnowBall")
         {
             Destroy(col.gameObject);
-            //do something here
+            //do something here ex. freeze
 
         }
         

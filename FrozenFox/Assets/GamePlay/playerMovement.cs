@@ -16,7 +16,7 @@ public class NewBehaviourScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+    // Update is called once per frame 
     void Update()
     {
         float horinzontalInput = Input.GetAxis("Horizontal");
