@@ -27,6 +27,16 @@ public class NewBehaviourScript : MonoBehaviour
         {
             rb.AddForce(new Vector2(rb.velocity.x, 300));
         }
+
+        if (Input.GetKeyDown(KeyCode.P))    //Pause the game
+        {
+            Time.timeScale = 0;
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))    //resume the game
+        {
+            Time.timeScale = 1;
+        }
     }
 
     public bool isGround()
