@@ -25,7 +25,7 @@ public class NewBehaviourScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W) && isGround())
         {
-            rb.AddForce(new Vector2(rb.velocity.x, 300));
+            rb.AddForce(new Vector2(rb.velocity.x, 600));
         }
     }
 
