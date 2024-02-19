@@ -14,6 +14,7 @@ public class NewBehaviourScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        FindObjectOfType<AudioManager>().Play("BGM");
     }
 
     // Update is called once per frame 

@@ -10,6 +10,7 @@ public class PlayerCollision : MonoBehaviour
         {
             Destroy(col.gameObject);
             //do something here ex. freeze
+            FindObjectOfType<AudioManager>().Play("Collision");
 
         }
         
