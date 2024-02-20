@@ -10,10 +10,17 @@ public class NewBehaviourScript : MonoBehaviour
     public Vector2 boxSize;
     public float castDistance;
     public LayerMask groundLayer;
+
+    public PlayerHealth playerHealth;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerHealth = GetComponent<PlayerHealth>();
+        if (playerHealth == null)
+        {
+            Debug.LogError("PlayerHealth script not found!");
+        }
     }
 
     // Update is called once per frame
@@ -26,6 +33,16 @@ public class NewBehaviourScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) && isGround())
         {
             rb.AddForce(new Vector2(rb.velocity.x, 600));
+        }
+
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            playerHealth.TakeDamage(1);
+        }
+
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            playerHealth.Heal(1);
         }
     }
 

@@ -1,23 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayHealth : MonoBehaviour
+
+public class PlayerHealth : MonoBehaviour
 {
     // Start is called before the first frame update
     public int maxHealth = 3;
-    public int currentHealth;
-    public Text health;
+    public int currentHealth = 3;
+    private GameObject circle1, circle2, circle3;
     
     void Start()
     {
-        currentHealth = maxHealth;
+        circle1 = GameObject.Find("Circle1");
+        circle2 = GameObject.Find("Circle2");
+        circle3 = GameObject.Find("Circle3");
+
+        if (circle1 == null || circle2 == null || circle3 == null)
+        {
+            Debug.LogError("Failed to find circles!");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        healthText.text = currentHealth.toString();
+        circle1.SetActive(currentHealth >= 1);
+        circle2.SetActive(currentHealth >= 2);
+        circle3.SetActive(currentHealth == 3);
     }
 
     public void TakeDamage(int damage){
@@ -30,7 +41,7 @@ public class PlayHealth : MonoBehaviour
     }
 
     void Die(){
-        Debug.log("Player died");
+        Debug.Log("Player died");
     }
 
     public void Heal(int amount){
