@@ -62,4 +62,23 @@ public class NewBehaviourScript : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
     }
+
+    // void OnCollisionEnter2D(Collision2D collision)
+    // {
+    //     if(collision.gameObject.CompareTag("Treat")){
+    //         Debug.Log("collision");
+    //         playerHealth.Heal(1);
+    //         Destroy(collision.gameObject);
+    //     }
+    // }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Treat"))
+        {
+            playerHealth.Heal(1);
+            Destroy(other.gameObject);
+        
+        }
+    }
 }

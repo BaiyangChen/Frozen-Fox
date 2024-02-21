@@ -42,6 +42,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Die(){
         Debug.Log("Player died");
+        // Destroy(gameObject);
     }
 
     public void Heal(int amount){
