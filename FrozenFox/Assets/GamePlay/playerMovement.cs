@@ -17,6 +17,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerHealth = GetComponent<PlayerHealth>();
+        FindObjectOfType<AudioManager>().Play("BGM");    //Play BGM
         if (playerHealth == null)
         {
             Debug.LogError("PlayerHealth script not found!");
@@ -76,6 +77,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
         if (other.CompareTag("Treat"))
         {
+            //FindObjectOfType<AudioManager>().Play("Collision");    //Play have treat sound
             playerHealth.Heal(1);
             Destroy(other.gameObject);
         
