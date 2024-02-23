@@ -8,6 +8,9 @@ TagManager:
   - Treat
   - target1
   - obstacle
+  - Health
+  - WinSign
+  - WinText
   layers:
   - Default
   - TransparentFX
