@@ -36,6 +36,16 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
 
+        if (Input.GetKeyDown(KeyCode.P))    //Pause the game
+        {
+            Time.timeScale = 0;
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))    //resume the game
+        {
+            Time.timeScale = 1;
+        }
+
         horinzontalInput = Input.GetAxis("Horizontal");
         if (isFreeze)
         {
