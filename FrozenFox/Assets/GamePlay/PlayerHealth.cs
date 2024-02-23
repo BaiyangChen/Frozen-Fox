@@ -9,26 +9,44 @@ public class PlayerHealth : MonoBehaviour
     // Start is called before the first frame update
     public int maxHealth = 3;
     public int currentHealth = 3;
-    private GameObject circle1, circle2, circle3;
+    private Image circle1, circle2, circle3;
+
+    private GameObject GameOverText;
     
     void Start()
     {
-        circle1 = GameObject.Find("Circle1");
-        circle2 = GameObject.Find("Circle2");
-        circle3 = GameObject.Find("Circle3");
+        circle1 = GameObject.FindGameObjectWithTag("Health1").GetComponent<Image>();
+        circle2 = GameObject.FindGameObjectWithTag("Health2").GetComponent<Image>();
+        circle3 = GameObject.FindGameObjectWithTag("Health3").GetComponent<Image>();
+        GameOverText = GameObject.Find("GameOverText");
+        GameOverText.SetActive(false);
 
-        if (circle1 == null || circle2 == null || circle3 == null)
-        {
-            Debug.LogError("Failed to find circles!");
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        circle1.SetActive(currentHealth >= 1);
-        circle2.SetActive(currentHealth >= 2);
-        circle3.SetActive(currentHealth == 3);
+        if(currentHealth == 1){
+            circle1.enabled = true;
+            circle2.enabled = false;
+            circle3.enabled = false;
+        }
+        else if(currentHealth == 2)
+        {
+            circle1.enabled = true;
+            circle2.enabled = true;
+            circle3.enabled = false;
+        }
+        else if(currentHealth == 3){
+            circle1.enabled = true;
+            circle2.enabled = true;
+            circle3.enabled = true;
+        }
+        else{
+            circle1.enabled = false;
+            circle2.enabled = false;
+            circle3.enabled = false;
+        }
     }
 
     public void TakeDamage(int damage){
@@ -42,6 +60,8 @@ public class PlayerHealth : MonoBehaviour
 
     void Die(){
         Debug.Log("Player died");
+        Time.timeScale = 0;
+        GameOverText.SetActive(true);
         // Destroy(gameObject);
     }
 

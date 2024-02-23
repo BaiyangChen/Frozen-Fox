@@ -8,6 +8,14 @@ TagManager:
   - target1
   - obstacle
   - SnowBall
+  - Health1
+  - Health2
+  - Health3
+  - Star1
+  - Star2
+  - Star3
+  - WinText
+  - WinSign
   layers:
   - Default
   - TransparentFX

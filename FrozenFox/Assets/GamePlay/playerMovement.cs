@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class playerMovement : MonoBehaviour
 {
@@ -15,22 +17,32 @@ public class playerMovement : MonoBehaviour
     private bool isFreeze;
     private float horinzontalInput;
     private float totalFreezeTime;
-
+    public GameObject WinText;
+    private float startTime, endTime;
+    private Image star1, star2, star3;
     public PlayerHealth playerHealth;
     // Start is called before the first frame update
     void Start()
     {
+        WinText = GameObject.Find("WinText");
+        WinText.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         playerHealth = GetComponent<PlayerHealth>();
         FindObjectOfType<AudioManager>().Play("BGM");    //Play BGM
-        if (playerHealth == null)
-        {
-            Debug.LogError("PlayerHealth script not found!");
-        }
         speed = 3f;
         jumpPower = 25f;
         isFreeze = false;
         totalFreezeTime = 3f;
+        startTime = Time.time;
+        star1 = GameObject.FindGameObjectWithTag("Star1").GetComponent<Image>();
+        star1.enabled = false;
+        star2 = GameObject.FindGameObjectWithTag("Star2").GetComponent<Image>();
+        star2.enabled = false;
+        star3 = GameObject.FindGameObjectWithTag("Star3").GetComponent<Image>();
+        star3.enabled = false;
+        if(star1 == null || star2 == null ||star3 == null){
+            Debug.Log("Stars not found");
+        }
     }
 
     // Update is called once per frame
@@ -53,10 +65,10 @@ public class playerMovement : MonoBehaviour
             playerHealth.TakeDamage(1);
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            playerHealth.Heal(1);
-        }
+        // if (Input.GetKeyDown(KeyCode.X))
+        // {
+        //     playerHealth.Heal(1);
+        // }
 
         if (isFreeze)
         {
@@ -113,7 +125,31 @@ public class playerMovement : MonoBehaviour
         else if (other.CompareTag("SnowBall"))
         {
             isFreeze = true;
+            playerHealth.TakeDamage(1);
             Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("WinSign"))
+        {
+            Debug.Log("Win");
+            WinText.SetActive(true);
+            endTime = Time.time;
+            float totalTime = endTime - startTime;
+            Debug.Log("Total time: " + totalTime);
+            if(totalTime <= 5){
+                star3.enabled = true;
+                star2.enabled = true;
+                star1.enabled = true;
+            }
+            else if(totalTime <= 20){
+                star2.enabled = true;
+                star1.enabled = true;
+            }
+            else{
+                star1.enabled = true;
+            }
+            Time.timeScale = 0;
+            
         }
     }
 
