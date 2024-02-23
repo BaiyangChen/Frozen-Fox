@@ -12,16 +12,29 @@ public class playerMovement : MonoBehaviour
     public LayerMask groundLayer;
 
     public PlayerHealth playerHealth;
+
+    public GameObject WinText;
+
+    private float startTime, endTime;
+
+    public GameObject star1, star2, star3;
+
     // Start is called before the first frame update
     void Start()
     {
+        WinText = GameObject.Find("WinText");
         rb = GetComponent<Rigidbody2D>();
         playerHealth = GetComponent<PlayerHealth>();
+        WinText.SetActive(false);
         FindObjectOfType<AudioManager>().Play("BGM");    //Play BGM
-        if (playerHealth == null)
-        {
-            Debug.LogError("PlayerHealth script not found!");
-        }
+        startTime = Time.time;
+        star1 = GameObject.Find("Star1");
+        star1.SetActive(false);
+        star2 = GameObject.Find("Star2");
+        star2.SetActive(false);
+        star3 = GameObject.Find("Star3");
+        star3.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -80,7 +93,29 @@ public class playerMovement : MonoBehaviour
             //FindObjectOfType<AudioManager>().Play("Collision");    //Play have treat sound
             playerHealth.Heal(1);
             Destroy(other.gameObject);
-        
+        }
+        if (other.CompareTag("WinSign"))
+        {
+            Debug.Log("Win");
+            WinText.SetActive(true);
+            endTime = Time.time;
+            float totalTime = endTime - startTime;
+            Debug.Log("Total time: " + totalTime);
+            if(totalTime <= 5){
+                star3.SetActive(true);
+                star2.SetActive(true);
+                star1.SetActive(true);
+            }
+            else if(totalTime <= 20){
+                star2.SetActive(true);
+                star1.SetActive(true);
+            }
+            else{
+                star1.SetActive(true);
+            }
+            Time.timeScale = 0f;
+            
         }
     }
+
 }
