@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8691083926507936688}
   - component: {fileID: 1788635779717684473}
   - component: {fileID: 4995903534388609418}
-  - component: {fileID: 2571581014936129821}
   m_Layer: 0
   m_Name: SnowBall
   m_TagString: Untagged
@@ -102,7 +101,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -113,7 +112,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!61 &4995903534388609418
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -159,16 +158,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2571581014936129821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8622068795751592465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 459e5a36d323b8848a7f57c6a2ddaf28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: 10

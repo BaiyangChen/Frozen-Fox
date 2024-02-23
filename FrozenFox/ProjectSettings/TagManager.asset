@@ -6,8 +6,6 @@ TagManager:
   tags:
   - canJump
   - Treat
-  - target1
-  - obstacle
   layers:
   - Default
   - TransparentFX
