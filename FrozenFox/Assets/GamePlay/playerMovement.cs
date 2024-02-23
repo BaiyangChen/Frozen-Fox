@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,7 +28,7 @@ public class playerMovement : MonoBehaviour
             Debug.LogError("PlayerHealth script not found!");
         }
         speed = 3f;
-        jumpPower = 10f;
+        jumpPower = 25f;
         isFreeze = false;
         totalFreezeTime = 3f;
     }
@@ -35,6 +36,27 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        horinzontalInput = Input.GetAxisRaw("Horizontal");
+
+
+        if (Input.GetKeyDown(KeyCode.W) && isGround())
+        {
+            rb.velocity = new Vector3(0, jumpPower, 0);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        rb.velocity = new Vector2(horinzontalInput * speed, rb.velocity.y);
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            playerHealth.TakeDamage(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            playerHealth.Heal(1);
+        }
 
         if (Input.GetKeyDown(KeyCode.P))    //Pause the game
         {
@@ -46,7 +68,6 @@ public class playerMovement : MonoBehaviour
             Time.timeScale = 1;
         }
 
-        horinzontalInput = Input.GetAxis("Horizontal");
         if (isFreeze)
         {
             totalFreezeTime -= Time.deltaTime;
@@ -60,28 +81,8 @@ public class playerMovement : MonoBehaviour
         }
         else if (!isFreeze)
         {
-            jumpPower = 13f;
+            jumpPower = 25f;
             speed = 3f;
-        }
-    }
-
-    void FixedUpdate()
-    {
-        rb.velocity = new Vector2(horinzontalInput * speed, rb.velocity.y);
-
-        if (Input.GetButtonDown("Jump") && isGround())
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            playerHealth.TakeDamage(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            playerHealth.Heal(1);
         }
     }
 
@@ -119,7 +120,7 @@ public class playerMovement : MonoBehaviour
             playerHealth.Heal(1);
             Destroy(other.gameObject);
         }
-        else if (other.gameObject.name == "SnowBall")
+        else if (other.CompareTag("SnowBall"))
         {
             isFreeze = true;
             Destroy(other.gameObject);
