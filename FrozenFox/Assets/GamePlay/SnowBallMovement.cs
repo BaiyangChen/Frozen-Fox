@@ -15,29 +15,25 @@ public class SnowBallMovement : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("target1"); 
         Vector2 targetV2 =  (Vector2)target.transform.position;
         Vector2 direction = targetV2-(Vector2)transform.position;//rigidbody2D.transform.position;
-        Debug.Log("direction is : " + direction);
+        //Debug.Log("direction is : " + direction);
         rigidbody2D.velocity = new Vector2(direction.x,direction.y).normalized*force;
     }
 
     
     // Update is called once per frame
-    void Update()
+    void fixedupdate()
+    //void Update()
     {       //remember to adjust the destory frame depends on the map size
-        if(transform.position.magnitude > 120.0f){
+        if(transform.position.magnitude > 50.0f){ //change into fixedupdate
             Destroy(gameObject);
         }
     }
 
     
-    //void OntriggerEnter2D(Collision2D other){
     void OnCollisionEnter2D( Collision2D other){            //for collision detecting
-        playerMovement e = other.collider.GetComponent<playerMovement>();
-        if(e != null){
-            
-            Destroy(gameObject); //fix the enermy if collide
-        }
-        /*if (other.gameObject.name=="target1"){
-            Destroy(gameObject);
-        } */
+        //playerMovement e = other.collider.GetComponent<playerMovement>();
+        //if(e != null){    
+        Destroy(gameObject); //fix the enermy if collide
+        //}
     }
 }
