@@ -14,7 +14,7 @@ public class playerMovement : MonoBehaviour
     public Vector2 boxSize;
     public float castDistance;
     public LayerMask groundLayer;
-    private bool isFreeze;
+    public bool isFreeze;
     private float horinzontalInput;
     private float totalFreezeTime;
     public GameObject WinText;
@@ -40,7 +40,8 @@ public class playerMovement : MonoBehaviour
         star2.enabled = false;
         star3 = GameObject.FindGameObjectWithTag("Star3").GetComponent<Image>();
         star3.enabled = false;
-        if(star1 == null || star2 == null ||star3 == null){
+        if (star1 == null || star2 == null || star3 == null)
+        {
             Debug.Log("Stars not found");
         }
     }
@@ -136,20 +137,23 @@ public class playerMovement : MonoBehaviour
             endTime = Time.time;
             float totalTime = endTime - startTime;
             Debug.Log("Total time: " + totalTime);
-            if(totalTime <= 5){
+            if (totalTime <= 5)
+            {
                 star3.enabled = true;
                 star2.enabled = true;
                 star1.enabled = true;
             }
-            else if(totalTime <= 20){
+            else if (totalTime <= 20)
+            {
                 star2.enabled = true;
                 star1.enabled = true;
             }
-            else{
+            else
+            {
                 star1.enabled = true;
             }
             Time.timeScale = 0;
-            
+
         }
     }
 

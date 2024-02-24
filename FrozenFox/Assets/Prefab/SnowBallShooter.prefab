@@ -195,3 +195,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SnowBall: {fileID: 8622068795751592465, guid: 8ecc011446834e74183ef73db61983f5, type: 3}
   snowballPos: {fileID: 8891111571524079556}
+  playerScript: {fileID: 0}
+  a: {fileID: 8622068795751592465, guid: 8ecc011446834e74183ef73db61983f5, type: 3}
