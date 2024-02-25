@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -18,20 +20,29 @@ public class playerMovement : MonoBehaviour
     public bool isFreeze;
     private float horinzontalInput;
     private float totalFreezeTime;
-    public GameObject WinText;
+    public Text WinText;
     private float startTime, endTime;
     private Image star1, star2, star3;
     public PlayerHealth playerHealth;
     public CameraMovement newCameraY;
+    private SpriteRenderer spriteReneder;
+    public Sprite frozenSprite;
+    public Sprite normalSprite;
+    private int winCount;
+    private float dashTime;
+    private bool canDash;
+
     // Start is called before the first frame update
     void Start()
     {
-        WinText = GameObject.Find("WinText");
-        WinText.SetActive(false);
+        dashTime = 0;
+        canDash = false;
+        WinText.enabled = false;
         rb = GetComponent<Rigidbody2D>();
+        spriteReneder = GetComponent<SpriteRenderer>();
         playerHealth = GetComponent<PlayerHealth>();
         FindObjectOfType<AudioManager>().Play("BGM");    //Play BGM
-        speed = 8f;
+        speed = 10f;
         jumpPower = 30f;
         isFreeze = false;
         totalFreezeTime = 3f;
@@ -46,13 +57,25 @@ public class playerMovement : MonoBehaviour
         {
             Debug.Log("Stars not found");
         }
+        winCount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        horinzontalInput = Input.GetAxisRaw("Horizontal");
+        if (canDash)
+        {
+            dashTime += Time.deltaTime;
+            speed = 18;
+            if (dashTime == 3)
+            {
+                dashTime = 0;
+                canDash = false;
+                speed = 10;
+            }
+        }
 
+        horinzontalInput = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetKeyDown(KeyCode.W) && isGround())
         {
@@ -75,6 +98,7 @@ public class playerMovement : MonoBehaviour
 
         if (isFreeze)
         {
+            spriteReneder.sprite = frozenSprite;
             totalFreezeTime -= Time.deltaTime;
             jumpPower = 0;
             speed = 0;
@@ -86,8 +110,18 @@ public class playerMovement : MonoBehaviour
         }
         else if (!isFreeze)
         {
+            spriteReneder.sprite = normalSprite;
             jumpPower = 30f;
-            speed = 8f;
+            speed = 10f;
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Application.Quit();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            String scene = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(scene);
         }
     }
 
@@ -108,14 +142,6 @@ public class playerMovement : MonoBehaviour
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
     }
 
-    // void OnCollisionEnter2D(Collision2D collision)
-    // {
-    //     if(collision.gameObject.CompareTag("Treat")){
-    //         Debug.Log("collision");
-    //         playerHealth.Heal(1);
-    //         Destroy(collision.gameObject);
-    //     }
-    // }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -134,19 +160,22 @@ public class playerMovement : MonoBehaviour
 
         if (other.CompareTag("WinSign"))
         {
+            winCount++;
             currentLevelIndex++;
+            speed = 0;
+            jumpPower = 0;
             if (currentLevelIndex < levelStartPositions.Count)
             {
                 transform.position = levelStartPositions[currentLevelIndex];
                 newCameraY.targetY = levelStartPositions[currentLevelIndex].y;
             }
-            else
+            if (winCount == 4)
             {
-                Debug.Log("Win");
-                WinText.SetActive(true);
+                WinText.enabled = true;
                 endTime = Time.time;
                 float totalTime = endTime - startTime;
                 Debug.Log("Total time: " + totalTime);
+                WinText.text = "You win, used:" + totalTime;
                 if (totalTime <= 5)
                 {
                     star3.enabled = true;
@@ -164,6 +193,12 @@ public class playerMovement : MonoBehaviour
                 }
                 //Time.timeScale = 0;
             }
+        }
+
+        if (other.gameObject.name == "Dash")
+        {
+            canDash = true;
+            Destroy(other.gameObject);
         }
     }
 

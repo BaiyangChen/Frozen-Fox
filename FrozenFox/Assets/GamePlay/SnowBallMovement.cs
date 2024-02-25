@@ -5,14 +5,14 @@ using UnityEngine;
 public class SnowBallMovement : MonoBehaviour
 {
     // Start is called before the first frame update
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D rb;
     private GameObject target;
     //private GameObject player;
     public float force;
 
     void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         // target = GameObject.FindGameObjectWithTag("target1");
         // Vector2 targetV2 = (Vector2)target.transform.position;
         // Vector2 direction = targetV2 - (Vector2)transform.position;//rigidbody2D.transform.position;
@@ -21,7 +21,7 @@ public class SnowBallMovement : MonoBehaviour
 
     void Update()
     {
-        rigidbody2D.AddForce(Vector2.up * 10);
+        rb.AddForce(Vector2.up * 10);
     }
     // Update is called once per frame
     void FixedUpdate()
