@@ -18,10 +18,10 @@ public class Respawn : MonoBehaviour
             RespawnPoint();
         }
 
-        if (player.transform.position.y < spawnValue)
-        {
-            RespawnPoint();
-        }
+        // if (player.transform.position.y < spawnValue)
+        // {
+        //     RespawnPoint();
+        // }
 
     }
 

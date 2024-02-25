@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class playerMovement : MonoBehaviour
 {
-
+    public List<Vector2> levelStartPositions;
+    private int currentLevelIndex = 0;
     private Rigidbody2D rb;
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
@@ -29,8 +30,8 @@ public class playerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerHealth = GetComponent<PlayerHealth>();
         FindObjectOfType<AudioManager>().Play("BGM");    //Play BGM
-        speed = 3f;
-        jumpPower = 25f;
+        speed = 8f;
+        jumpPower = 30f;
         isFreeze = false;
         totalFreezeTime = 3f;
         startTime = Time.time;
@@ -84,8 +85,8 @@ public class playerMovement : MonoBehaviour
         }
         else if (!isFreeze)
         {
-            jumpPower = 25f;
-            speed = 3f;
+            jumpPower = 30f;
+            speed = 8f;
         }
     }
 
@@ -132,28 +133,36 @@ public class playerMovement : MonoBehaviour
 
         if (other.CompareTag("WinSign"))
         {
-            Debug.Log("Win");
-            WinText.SetActive(true);
-            endTime = Time.time;
-            float totalTime = endTime - startTime;
-            Debug.Log("Total time: " + totalTime);
-            if (totalTime <= 5)
+            currentLevelIndex++;
+
+            if (currentLevelIndex < levelStartPositions.Count)
             {
-                star3.enabled = true;
-                star2.enabled = true;
-                star1.enabled = true;
-            }
-            else if (totalTime <= 20)
-            {
-                star2.enabled = true;
-                star1.enabled = true;
+                transform.position = levelStartPositions[currentLevelIndex];
             }
             else
             {
-                star1.enabled = true;
+                Debug.Log("Win");
+                WinText.SetActive(true);
+                endTime = Time.time;
+                float totalTime = endTime - startTime;
+                Debug.Log("Total time: " + totalTime);
+                if (totalTime <= 5)
+                {
+                    star3.enabled = true;
+                    star2.enabled = true;
+                    star1.enabled = true;
+                }
+                else if (totalTime <= 20)
+                {
+                    star2.enabled = true;
+                    star1.enabled = true;
+                }
+                else
+                {
+                    star1.enabled = true;
+                }
+                //Time.timeScale = 0;
             }
-            Time.timeScale = 0;
-
         }
     }
 
