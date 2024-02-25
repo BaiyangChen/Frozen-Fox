@@ -60,8 +60,7 @@ public class SnowBallShooter : MonoBehaviour
 
     IEnumerator wait()
     {
-        Debug.Log("aa");
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         canShoot = true;
     }
 

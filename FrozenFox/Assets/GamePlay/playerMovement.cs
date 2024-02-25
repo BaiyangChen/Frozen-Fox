@@ -22,6 +22,7 @@ public class playerMovement : MonoBehaviour
     private float startTime, endTime;
     private Image star1, star2, star3;
     public PlayerHealth playerHealth;
+    public CameraMovement newCameraY;
     // Start is called before the first frame update
     void Start()
     {
@@ -134,10 +135,10 @@ public class playerMovement : MonoBehaviour
         if (other.CompareTag("WinSign"))
         {
             currentLevelIndex++;
-
             if (currentLevelIndex < levelStartPositions.Count)
             {
                 transform.position = levelStartPositions[currentLevelIndex];
+                newCameraY.targetY = levelStartPositions[currentLevelIndex].y;
             }
             else
             {

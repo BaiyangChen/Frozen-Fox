@@ -8,11 +8,19 @@ public class CameraMovement : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private Vector3 offset = new Vector3(3f, 3f, -10f);
     private Vector3 targetPosition;
+    public float targetY;
 
+
+    void Start()
+    {
+        targetY = target.position.y;
+    }
     // Update is called once per frame
     void Update()
     {
-        targetPosition = new Vector3(target.position.x + offset.x, transform.position.y, target.position.z + offset.z);
+        targetPosition = new Vector3(target.position.x + offset.x, targetY + offset.y, target.position.z + offset.z);
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, 0.25f);
     }
+
+
 }
