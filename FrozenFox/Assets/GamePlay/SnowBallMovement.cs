@@ -24,15 +24,7 @@ public class SnowBallMovement : MonoBehaviour
         rb.AddForce(Vector2.up * 10);
     }
     // Update is called once per frame
-    void FixedUpdate()
-    //void Update()
-    {       //remember to adjust the destory frame depends on the map size
 
-        if (transform.position.magnitude > 500.0f)
-        { //change into fixedupdate
-            Destroy(gameObject);
-        }
-    }
 
 
     void OnTriggerEnter2D(Collider2D other)

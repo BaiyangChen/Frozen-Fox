@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6155473266776348125}
   - component: {fileID: 8691083926507936688}
   - component: {fileID: 1788635779717684473}
-  - component: {fileID: 4995903534388609418}
   - component: {fileID: 2571581014936129821}
+  - component: {fileID: -3982884541198556780}
   m_Layer: 0
   m_Name: SnowBall
   m_TagString: SnowBall
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.33, y: 3, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 0.55347645}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: 21300000, guid: f049472f3baac4b9da6a0e3329a5e425, type: 3}
+  m_Sprite: {fileID: -808308697, guid: f049472f3baac4b9da6a0e3329a5e425, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.56, y: 2.57}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -114,8 +114,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &4995903534388609418
-BoxCollider2D:
+--- !u!114 &2571581014936129821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8622068795751592465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 459e5a36d323b8848a7f57c6a2ddaf28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 10
+--- !u!58 &-3982884541198556780
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -147,28 +160,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 1.37, y: 1.88, z: 1.7199999, w: 1.1}
-    pivot: {x: 0.46547756, y: 0.5626518}
-    oldSize: {x: 5.66, y: 5.66}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &2571581014936129821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8622068795751592465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 459e5a36d323b8848a7f57c6a2ddaf28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: 10
+  m_Radius: 0.88
