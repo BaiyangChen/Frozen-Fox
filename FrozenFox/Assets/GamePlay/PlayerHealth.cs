@@ -12,7 +12,7 @@ public class PlayerHealth : MonoBehaviour
     private Image circle1, circle2, circle3;
 
     private GameObject GameOverText;
-    
+
     void Start()
     {
         circle1 = GameObject.FindGameObjectWithTag("Health1").GetComponent<Image>();
@@ -26,46 +26,51 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentHealth == 1){
+        if (currentHealth == 1)
+        {
             circle1.enabled = true;
             circle2.enabled = false;
             circle3.enabled = false;
         }
-        else if(currentHealth == 2)
+        else if (currentHealth == 2)
         {
             circle1.enabled = true;
             circle2.enabled = true;
             circle3.enabled = false;
         }
-        else if(currentHealth == 3){
+        else if (currentHealth == 3)
+        {
             circle1.enabled = true;
             circle2.enabled = true;
             circle3.enabled = true;
         }
-        else{
+        else
+        {
             circle1.enabled = false;
             circle2.enabled = false;
             circle3.enabled = false;
         }
     }
 
-    public void TakeDamage(int damage){
+    public void TakeDamage(int damage)
+    {
         currentHealth -= damage;
         Update();
 
-        if(currentHealth <= 0){
+        if (currentHealth <= 0)
+        {
             Die();
         }
     }
 
-    void Die(){
-        Debug.Log("Player died");
-        Time.timeScale = 0;
+    void Die()
+    {
         GameOverText.SetActive(true);
         // Destroy(gameObject);
     }
 
-    public void Heal(int amount){
+    public void Heal(int amount)
+    {
         currentHealth += amount;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
         Update();

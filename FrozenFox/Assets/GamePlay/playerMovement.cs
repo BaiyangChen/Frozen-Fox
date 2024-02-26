@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,7 +20,7 @@ public class playerMovement : MonoBehaviour
     private float horinzontalInput;
     private float totalFreezeTime;
     public Text WinText;
-    private float startTime, endTime;
+    private float totalTime;
     private Image star1, star2, star3;
     public PlayerHealth playerHealth;
     public CameraMovement newCameraY;
@@ -35,7 +34,7 @@ public class playerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dashTime = 0;
+        dashTime = 5;
         canDash = false;
         WinText.enabled = false;
         rb = GetComponent<Rigidbody2D>();
@@ -46,7 +45,6 @@ public class playerMovement : MonoBehaviour
         jumpPower = 30f;
         isFreeze = false;
         totalFreezeTime = 3f;
-        startTime = Time.time;
         star1 = GameObject.FindGameObjectWithTag("Star1").GetComponent<Image>();
         star1.enabled = false;
         star2 = GameObject.FindGameObjectWithTag("Star2").GetComponent<Image>();
@@ -65,17 +63,15 @@ public class playerMovement : MonoBehaviour
     {
         if (canDash)
         {
-            dashTime += Time.deltaTime;
-            speed = 18;
-            if (dashTime == 3)
+            dashTime -= Time.deltaTime;
+            speed = 20;
+            if (dashTime <= 0)
             {
-                dashTime = 0;
                 canDash = false;
-                speed = 10;
+                dashTime = 5;
+                speed = 13;
             }
         }
-
-        horinzontalInput = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetKeyDown(KeyCode.W) && isGround())
         {
@@ -100,19 +96,22 @@ public class playerMovement : MonoBehaviour
         {
             spriteReneder.sprite = frozenSprite;
             totalFreezeTime -= Time.deltaTime;
+            horinzontalInput = 0;
             jumpPower = 0;
             speed = 0;
             if (totalFreezeTime <= 0)
             {
+                horinzontalInput = Input.GetAxisRaw("Horizontal");
                 totalFreezeTime = 3;
                 isFreeze = false;
             }
         }
         else if (!isFreeze)
         {
+            horinzontalInput = Input.GetAxisRaw("Horizontal");
             spriteReneder.sprite = normalSprite;
             jumpPower = 30f;
-            speed = 10f;
+            speed = 13f;
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -122,6 +121,15 @@ public class playerMovement : MonoBehaviour
         {
             String scene = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(scene);
+        }
+
+        if (winCount == 5)
+        {
+            winGame();
+        }
+        else
+        {
+            totalTime += Time.deltaTime;
         }
     }
 
@@ -156,42 +164,21 @@ public class playerMovement : MonoBehaviour
             isFreeze = true;
             playerHealth.TakeDamage(1);
             Destroy(other.gameObject);
+            if (playerHealth.currentHealth <= 0)
+            {
+                normalSprite = frozenSprite;
+                Time.timeScale = 0;
+            }
         }
 
         if (other.CompareTag("WinSign"))
         {
             winCount++;
             currentLevelIndex++;
-            speed = 0;
-            jumpPower = 0;
             if (currentLevelIndex < levelStartPositions.Count)
             {
                 transform.position = levelStartPositions[currentLevelIndex];
                 newCameraY.targetY = levelStartPositions[currentLevelIndex].y;
-            }
-            if (winCount == 4)
-            {
-                WinText.enabled = true;
-                endTime = Time.time;
-                float totalTime = endTime - startTime;
-                Debug.Log("Total time: " + totalTime);
-                WinText.text = "You win, used:" + totalTime;
-                if (totalTime <= 5)
-                {
-                    star3.enabled = true;
-                    star2.enabled = true;
-                    star1.enabled = true;
-                }
-                else if (totalTime <= 20)
-                {
-                    star2.enabled = true;
-                    star1.enabled = true;
-                }
-                else
-                {
-                    star1.enabled = true;
-                }
-                //Time.timeScale = 0;
             }
         }
 
@@ -199,6 +186,29 @@ public class playerMovement : MonoBehaviour
         {
             canDash = true;
             Destroy(other.gameObject);
+        }
+    }
+
+    private void winGame()
+    {
+        jumpPower = 0;
+        horinzontalInput = 0;
+        WinText.enabled = true;
+        WinText.text = "You win, used:" + totalTime.ToString("F2");
+        if (totalTime <= 5)
+        {
+            star3.enabled = true;
+            star2.enabled = true;
+            star1.enabled = true;
+        }
+        else if (totalTime <= 20)
+        {
+            star2.enabled = true;
+            star1.enabled = true;
+        }
+        else
+        {
+            star1.enabled = true;
         }
     }
 

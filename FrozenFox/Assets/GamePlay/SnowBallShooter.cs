@@ -25,42 +25,34 @@ public class SnowBallShooter : MonoBehaviour
     {
         if (playerScript.isFreeze == true)
         {
-            canShoot = false;
+            if (canShoot)
+            {
+                canShoot = false;
+                StartCoroutine(wait(6));
+            }
         }
-        timer += Time.deltaTime;
-        if (timer > 2 && canShoot)
+        else
         {
-            timer = 0;
-            shoot();
-        }
-        else if (!canShoot)
-        {
-            StartCoroutine(wait());
+            timer += Time.deltaTime;
+            if (canShoot && timer > 3)
+            {
+                timer = 0;
+                shoot();
+            }
         }
     }
 
     void shoot()
     {
-        //Instantiate(SnowBall, snowballPos.position);
-
-        //float horizontal = Input.GetAxis("Horizontal");
-        //float vertical = Input.GetAxis("Vertical");
-        //Vector2 move = new Vector2(rigidbody2d.position.x, rigidbody2d.position.y);
-        //lookDirection.Set(move.x, move.y);
-        //lookDirection.Normalize();
-        //Debug.Log("direction is : " + lookDirection);
-
-        GameObject projectileObject = Instantiate(SnowBall, snowballPos.position/*rigidbody2d.position + Vector2.up * 0.5f*/, Quaternion.identity);
-        //SnowBallMovement projectile = projectileObject.GetComponent<SnowBallMovement>();
-        //projectile.Launch(lookDirection, 300);
-
-        //animator.SetTrigger("Lauch");
+        GameObject projectileObject = Instantiate(SnowBall, snowballPos.position, Quaternion.identity);
 
     }
 
-    IEnumerator wait()
+    IEnumerator wait(float delay)
     {
-        yield return new WaitForSeconds(5);
+        Debug.Log("start counting");
+        yield return new WaitForSeconds(delay);
+        Debug.Log("itis been 6 second");
         canShoot = true;
     }
 
