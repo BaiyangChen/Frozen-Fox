@@ -87,10 +87,6 @@ public class playerMovement : MonoBehaviour
             playerHealth.TakeDamage(1);
         }
 
-        // if (Input.GetKeyDown(KeyCode.X))
-        // {
-        //     playerHealth.Heal(1);
-        // }
 
         if (isFreeze)
         {
@@ -119,6 +115,7 @@ public class playerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
+
             String scene = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(scene);
         }
@@ -130,6 +127,11 @@ public class playerMovement : MonoBehaviour
         else
         {
             totalTime += Time.deltaTime;
+        }
+        if (playerHealth.currentHealth <= 0)
+        {
+            horinzontalInput = 0;
+            jumpPower = 0;
         }
     }
 
@@ -164,11 +166,7 @@ public class playerMovement : MonoBehaviour
             isFreeze = true;
             playerHealth.TakeDamage(1);
             Destroy(other.gameObject);
-            if (playerHealth.currentHealth <= 0)
-            {
-                normalSprite = frozenSprite;
-                Time.timeScale = 0;
-            }
+
         }
 
         if (other.CompareTag("WinSign"))
