@@ -192,7 +192,7 @@ public class playerMovement : MonoBehaviour
         jumpPower = 0;
         horinzontalInput = 0;
         WinText.enabled = true;
-        WinText.text = "You win, used:" + totalTime.ToString("F2");
+        WinText.text = "You win, used:" + totalTime.ToString("F2") + "Press Q to quit or R to replay";
         if (totalTime <= 5)
         {
             star3.enabled = true;
